@@ -1,4 +1,4 @@
-Shell Basics - Task 0x00
+## Shell Basics - Task 0x00
 
 Welcome to the Shell Basics task! This task will introduce you to the fundamentals of using the command-line shell in a Unix-like operating system. The shell is a powerful tool that allows you to interact with your computer using text-based commands. By completing this task, you will gain essential knowledge and skills for working with files, directories, and executing commands.
 Resources
