@@ -14,7 +14,7 @@ if [ ! -f "$input" ]; then
 	exit 1
 fi
 
-git add "$input" || {echo "Failed to add "$input" to git!"; exit 1;}
+git add "$input" || { echo "Failed to add "$input" to git!"; exit 1; }
 
 echo "Enter commit message: "
 read commit
