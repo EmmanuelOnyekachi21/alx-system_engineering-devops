@@ -1,2 +1,2 @@
 #!/bin/bash
-{ dup=$(tail -n 1 iacta); echo "$dup" >> iacta; }
+tail -n 1 iacta >> iacta
