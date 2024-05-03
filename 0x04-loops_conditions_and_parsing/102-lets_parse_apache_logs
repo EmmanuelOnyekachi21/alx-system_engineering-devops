@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Use awk to process the Apache log file
+
+awk '{
+	# Extract visitor IP and HTTP status code
+	ip = $1
+	http_code = $9
+
+	# Output formatted data
+	print ip, http_code
+}' apache-access.log
