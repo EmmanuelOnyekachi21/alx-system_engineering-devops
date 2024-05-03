@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Displays the content of `/etc/passwd`:
 # 	It displays only:
 # 			- username
