@@ -1,11 +1,34 @@
 #!/usr/bin/env bash
-# create pub file with its own pid and receive SIG
-sudo bash -c "echo $$ > /var/run/codingschoolscript.pid"
-trap "sudo rm -f /var/run/codingschoolscript.pid; exit" SIGQUIT
-trap "sudo rm -f /var/run/codingschoolscript.pid; echo I hate the kill command; exit" SIGTERM
-trap "echo Y U no love me?!" SIGINT
-while :
-do
+# Function to handle SIGTERM, SIGINT, SIGQUIT signals
+sig_handler() {
+    rm -f /var/run/myscript.pid
+    exit 0
+}
+
+# Trap SIGTERM, SIGINT, SIGQUIT signals and call sig_handler function
+trap 'sig_handler' SIGTERM SIGINT SIGQUIT
+
+# Function to handle SIGTERM signal for message display
+sigterm_handler() {
+    echo "I hate the kill command"
+}
+
+# Function to handle SIGINT signal for message display
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+
+# Trap SIGTERM signal and call sigterm_handler function
+trap 'sigterm_handler' SIGTERM
+
+# Trap SIGINT signal and call sigint_handler function
+trap 'sigint_handler' SIGINT
+
+# Create file containing script PID
+echo $$ > /var/run/myscript.pid
+
+# Display "To infinity and beyond" indefinitely
+while true; do
     echo "To infinity and beyond"
     sleep 2
 done
