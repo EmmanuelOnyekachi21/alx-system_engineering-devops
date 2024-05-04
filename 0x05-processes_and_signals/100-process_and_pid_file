@@ -1,22 +1,22 @@
-#!/usr/bin/env bash
-# Function to handle SIGTERM, SIGINT, SIGQUIT signals
+#!/bin/bash
 
-sig_handler(){
-	rm -f /var/run/myscript.pid
-	exit 0
+# Function to handle SIGTERM, SIGINT, SIGQUIT signals
+sig_handler() {
+    rm -f /var/run/myscript.pid
+    exit 0
 }
 
-# Trap SIGTERM, SIGINT, SIGQUIT signals and call sig_handler function.
-trap 'sig_handler' SIGTERM SIGQUIT
+# Trap SIGTERM, SIGINT, SIGQUIT signals and call sig_handler function
+trap 'sig_handler' SIGTERM SIGINT SIGQUIT
 
-# Function to handle SIGTERM signal for message display.
-sigterm_handler(){
-	echo "I hate the kill command"
+# Function to handle SIGTERM signal for message display
+sigterm_handler() {
+    echo "I hate the kill command"
 }
 
 # Function to handle SIGINT signal for message display
-sigint_handler(){
-	echo "Y U no love me?!"
+sigint_handler() {
+    echo "Y U no love me?!"
 }
 
 # Trap SIGTERM signal and call sigterm_handler function
@@ -31,4 +31,5 @@ echo $$ > /var/run/myscript.pid
 # Display "To infinity and beyond" indefinitely
 while true; do
     echo "To infinity and beyond"
+    sleep 1
 done
