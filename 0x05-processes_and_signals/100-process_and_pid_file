@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Function to handle SIGTERM, SIGINT, SIGQUIT signals
 sig_handler() {
     rm -f /var/run/myscript.pid
