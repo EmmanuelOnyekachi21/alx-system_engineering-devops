@@ -6,5 +6,5 @@ then
 	echo "Usage: $0 {IP_ADDRESS}"
 else
 	file=$1
-	ping -c 5 $file
+	ping -c 5 "$file"
 fi
