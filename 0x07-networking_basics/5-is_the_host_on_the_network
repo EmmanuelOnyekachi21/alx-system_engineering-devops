@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Pings the provided IP address 5 times
 
-if [[ $# -ne 1 ]]
+if [[ "$#" -ne 1 ]]
 then
 	echo "Usage: $0 {IP_ADDRESS}"
-else
-	file=$1
-	ping -c 5 "$file"
+	exit 1
 fi
+
+file=$1
+ping -c 5 "$file"
