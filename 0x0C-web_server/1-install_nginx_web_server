@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
-#A script that installs nginx and start the service.
+# A script that installs nginx and start the service.
+
+# Update package index
 apt-get update
+
+# Install nginx
 apt-get -y install nginx
-service nginx start
-echo "Hello World!" > /var/www/html/index.html
+
+ufw allow 'Nginx HTTP'
+
+# Configure nginx to listen on Port 80 and serve "Hello World!" at the root
+bash -c 'echo "Hello World!" > /var/www/html/index.html'
+
+# Restart nginx
+service nginx restart
