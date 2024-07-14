@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
-# A script that installs nginx and start the service.
-
-# Update package index
+#A script that installs nginx and start the service.
 apt-get update
-
-# Install nginx
 apt-get -y install nginx
-
-# Ensure nginx is running.
 service nginx start
-
-# Configure nginx to serve "Hello world" at root /
 echo "Hello World!" > /var/www/html/index.html
-
-# Restart nginx without using systemctl
-/etc/init.d/nginx reload > /dev/null
