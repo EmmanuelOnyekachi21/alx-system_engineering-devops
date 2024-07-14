@@ -1,3 +1,4 @@
+# Ensure SSH client configuration
 file { '/etc/ssh/ssh_config':
   ensure  => file,
   content => "
