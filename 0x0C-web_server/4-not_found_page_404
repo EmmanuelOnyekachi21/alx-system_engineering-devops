@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Configures the Nginx server so that /redirect_me is \
+# redirecting to another page.
+
+# Update the package list and install Nginx
+apt-get update
+apt-get install nginx
+
+# Allow Nginx through the firewall
+ufw allow 'Nginx HTTP'
+
+# Create the web root directory and set permissions
+mkdir -p /var/www/html/
+sudo chmod -R 755 /var/www
+
+# Create a simple HTML file
+echo 'Hello World!' > /var/www/html/index.html
+
+# Create a custom 404 page
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Define the error_page configuration
+ERROR_CONFIG ="
+	error_page 404 /404.html;
+	location = /404.html {
+		internal;
+	}
+"
+
+# Append the error_page configuration to the existing server block \
+# in the default site configuration.
+sed -i "/server_name _;/a \\
+	$ERROR_CONFIG" /etc/nginx/sites-available/default
+
+# Restart Nginx to apply the changes
+if [ $(pgrep -c nginx) -le 0 ]; then
+	service nginx start
+else
+	service nginx restart
+fi
