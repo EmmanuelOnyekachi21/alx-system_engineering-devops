@@ -17,7 +17,7 @@ sudo chmod -R 755 /var/www
 echo 'Hello World!' > /var/www/html/index.html
 
 # Define the redirection configuration
-REDIRECTION_CONFIG ="
+REDIRECTION_CONFIG="
 	location /redirect_me {
 		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
 	}
