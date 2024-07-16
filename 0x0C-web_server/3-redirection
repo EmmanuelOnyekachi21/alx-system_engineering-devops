@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Configures the Nginx server so that /redirect_me is \
-# redirecting to another page.
+# Configures the Nginx server so that /redirect_me is redirecting to another page.
 
 # Update the package list and install Nginx
 apt-get update
