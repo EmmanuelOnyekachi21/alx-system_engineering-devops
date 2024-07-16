@@ -20,8 +20,4 @@ echo 'Hello World!' > /var/www/html/index.html
 sed -i "/^\tlocation \/ {/a \\\tlocation /redirect_me {\n\t\trewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the changes
-if [ $(pgrep -c nginx) -le 0 ]; then
-	service nginx start
-else
-	service nginx restart
-fi
+service nginx start
