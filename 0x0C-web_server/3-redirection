@@ -14,22 +14,11 @@ mkdir -p /var/www/html/
 sudo chmod -R 755 /var/www
 
 # Create a simple HTML file
-echo '<html>
-<head><title>301 Moved Permanently</title></head>
-<body>
-<p>This page has been ' > /var/www/html/index.html
+echo 'Hello World!' > /var/www/html/index.html
 
-# Define the redirection configuration
-REDIRECTION_CONFIG="
-	location /redirect_me {
-		rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
-	}
-"
-
-# Append the redirection configuration to the existing server block \
+# Define the redirection configuration to the existing server block \
 # in the default site configuration.
-sed -i "/server_name _;/a \\
-	$REDIRECTION_CONFIG" /etc/nginx/sites-available/default
+sed -i "/^\tlocation \/ {/a \\\tlocation /redirect_me {\n\t\trewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}" /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the changes
 if [ $(pgrep -c nginx) -le 0 ]; then
