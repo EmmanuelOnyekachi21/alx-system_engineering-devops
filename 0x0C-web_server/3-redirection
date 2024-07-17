@@ -15,9 +15,17 @@ sudo chmod -R 755 /var/www
 # Create a simple HTML file
 echo 'Hello World!' > /var/www/html/index.html
 
+# Define the direction configuration
+REDIRECT_CONFIG="
+	rewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+	"
+
 # Define the redirection configuration to the existing server block \
 # in the default site configuration.
-sed -i "/^\tlocation \/ {/a \\\tlocation /redirect_me {\n\t\trewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}" /etc/nginx/sites-available/default
+sed -i '/server_name _;/a $REDIRECT_CONFIG' /etc/nginx/sites-available/default
+
+#Check Nginx configuration syntax
+sudo nginx -t
 
 # Restart Nginx to apply the changes
 service nginx start
