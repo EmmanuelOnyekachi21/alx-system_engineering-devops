@@ -4,9 +4,6 @@
 
 # Install nginx
 apt-get update
-
-echo "apt-get update: Completed"
-
 apt-get -y install nginx
 
 ufw allow 'Nginx HTTP'
