@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# A script that installs nginx and start the service,
+# It also adds a custom HTTP header stating hostname of the server
+
+# Install nginx
+apt-get update
+
+echo "apt-get update: Completed"
+
+apt-get -y install nginx
+
+ufw allow 'Nginx HTTP'
+
+# Create custom page
+echo "Hello World!" > /var/www/html/index.html
+
+# Create custom HTTP header identifying server hostname
+HOSTNAME=$(hostname)
+file="/etc/nginx/sites-available/default"
+
+# Update Nginx configuration
+if ! grep -q "add_header X-Served-By" $file; then
+	echo "Adding custom header to Nginx configuration"
+	sed -i "/^\tlocation \/ {/a \ \t\tadd_header X-Served-By \"$HOSTNAME\";" $file
+fi
+
+service nginx start
+# Reload Nginx to apply changes
+service nginx restart
+
