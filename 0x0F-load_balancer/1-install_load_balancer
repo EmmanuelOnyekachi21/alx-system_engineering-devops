@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Update and install HAproxy.
+
+# Update and install necessary tools
+sudo apt-get -y install --no-install-recommends software-properties-common
+
+# Add the PPA for the latest HAproxy version
+sudo add-apt-repository -y ppa:vbernat/haproxy-2.8
+
+#Update
+sudo apt-get update
+
+# Install the specific version of HAproxy
+sudo apt-get -y install haproxy=2.8.\*
+
+# Backup the original HAProxy configuration file
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+
+# Create a new HAproxy configuration file
+echo -e "\nfrontend http-front\n\tbind *:80\n\tmode http\n\tdefault_backend http-back\n\nbackend http-back\n\tbalance roundrobin\n\tserver 471347-web-01 3.85.141.115:80 check\n\tserver 471347-web-02 54.237.55.254:80 check" >> /etc/haproxy/haproxy.cfg
+
+# Restart HAproxy to apply the new configuration'
+sudo service haproxy restart
+
+# Ensure HAProxy starts on boot
+if [ -f /etc/init.d/haproxy ]; then
+    sudo update-rc.d haproxy defaults
+else
+    echo "No init script found for HAProxy. Please ensure HAProxy is configured to start on boot manually."
+fi
+
+# Check HAProxy status
+sudo service haproxy status
+
