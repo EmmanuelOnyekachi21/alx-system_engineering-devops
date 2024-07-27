@@ -41,36 +41,7 @@ check_success "Backup of HAProxy configuration"
 
 # Overwrite the HAproxy configuration file with new settings
 echo -e "\n\nApplying new HAProxy configuration...\n\n\n"
-bash -c "cat > /etc/haproxy/haproxy.cfg" <<EOF
-global
-    log /dev/log local0
-    log /dev/log local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
-
-defaults
-    log     global
-    option  httplog
-    option  dontlognull
-    timeout connect 5000ms
-    timeout client  50000ms
-    timeout server  50000ms
-
-frontend D3MXN_W3B
-	bind *:80
-	mode http
-	default_backend D3MXN_W3B
-
-backend D3MXN_W3B
-	balance roundrobin
-	mode http
-	server 471347-web-01 3.85.141.115:80 check
-	server 471347-web-02 54.237.55.254:80 check
-EOF
+echo -e "\nfrontend D3MXN-W3B\n\tbind *:80\n\tmode http\n\tdefault_backend D3MXN-BVCK3ND\n\nbackend D3MXN-BVCK3ND\n\tbalance roundrobin\n\tserver 471347-web-01 3.85.141.115:80 check\n\tserver 471347-web-02 54.237.55.254:80 check" >> /etc/haproxy/haproxy.cfg
 check_success "Application of HAProxy configuration"
 
 # Ensure HAProxy is enabled
