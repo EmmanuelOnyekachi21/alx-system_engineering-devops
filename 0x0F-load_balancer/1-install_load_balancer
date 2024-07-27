@@ -21,7 +21,7 @@ check_success "Installation of software-properties-common"
 
 # Add the PPA for the latest HAProxy version
 echo -e "\n\nAdding PPA for HAProxy...\n\n\n"
-add-apt-repository ppa:vbernat/haproxy-2.8
+add-apt-repository ppa:vbernat/haproxy-2.8 -y
 check_success "Adding PPA for HAProxy"
 
 # Update package list to include new PPA
@@ -31,7 +31,7 @@ check_success "Updating package list"
 
 # Install the specific version of the HAproxy
 echo -e "\n\nInstalling HAProxy version 2.8...\n\n\n"
-apt-get install haproxy=2.8.\*
+apt-get install haproxy=2.8.\* -y
 check_success "Installation of HAProxy"
 
 # Backup the original HAProxy configuration file
@@ -69,7 +69,7 @@ backend D3MXN_W3B
 	balance roundrobin
 	mode http
 	server 471347-web-01 3.85.141.115:80 check
-	server 471347-web-02 54.237.55.254:80 check" >> /etc/haproxy/haproxy.cfg
+	server 471347-web-02 54.237.55.254:80 check
 EOF
 check_success "Application of HAProxy configuration"
 
