@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Enables the default Nginx configuration and starts the service
-sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
-kill $(pgrep 'nginx' | head -1)
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
+kill "$(pgrep 'nginx' | head -1)"
