@@ -1,28 +1,22 @@
 #!/usr/bin/env bash
-# A script to get DNS information for specified subdomains of a given domain
-
-get_dns_info () {
-    local domain=$1
-    local sub=$2
-    local full="${sub}.${domain}"
-
-    # Perform DNS query
-    output=$(dig "$full" | grep -A1 'ANSWER SECTION:' | grep "$full" | awk '{print $4, $5}')
-    record_type=$(echo "$output" | awk '{print $1}')
-    address=$(echo "$output" | awk '{print $2}')
-
-    # Output result
-    echo "The subdomain \"$sub\" is a \"$record_type\" record and points to \"$address\""
+# A script that takes in domain and subdomain names and returns their ip addrs
+# shellcheck disable=SC2086
+getIp(){
+	local val
+	local record
+	local addr
+	val=$(dig "$2.$1" | grep -A1 'ANSWER SECTION:' | grep "$2.$1" | awk '{print $4,$5}')
+	record=$(echo $val | awk '{print $1}')
+	addr=$(echo $val | awk '{print $2}')
+	echo "The subdomain $2 is a $record record and points to $addr"
 }
-
-# Check number of arguments
-if [[ "$#" -eq 1 ]]; then
-    # Query multiple subdomains for the given domain
-    get_dns_info "$1" "www"
-    get_dns_info "$1" "lb-01"
-    get_dns_info "$1" "web-01"
-    get_dns_info "$1" "web-02"
+#condition statement to check amount of args
+if [ "$#" -eq 1 ];
+then
+	getIp "$1" "www";
+	getIp "$1" "lb-01";
+	getIp "$1" "web-01";
+	getIp "$1" "web-02";
 else
-    # Query specific subdomain for the given domain
-    get_dns_info "$1" "$2"
+	getIp "$1" "$2"
 fi
