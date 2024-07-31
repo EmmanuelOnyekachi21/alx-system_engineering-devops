@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Function to get DNS info for a given subdomain
+
+get_dns_info () {
+	local domain=$1
+	local sub=$2
+	local full="${sub}.${domain}"
+
+	# DNS query
+	output=$(dig "$full" | grep -A1 'ANSWER SECTION:' | grep "$full" | awk '{print $4, $5}')
+	record_type=$(echo "$output" | awk '{print $1}')
+	address=$(echo "$output" | awk '{print $2}')
+
+	echo "The subdomain \"$sub\" is a \"$record_type\" and points to \"$address\""
+}
+
+#get_dns_info holberton.online web-02
+
+if [[ "$#" -eq 1 ]]; then
+	get_dns_info "$1" "www"
+	get_dns_info "$1" "lb-01"
+	get_dns_info "$1" "web-01"
+	get_dns_info "$1" "web-02"
+else
+	get_dns_info "$1" "$2"
+fi
