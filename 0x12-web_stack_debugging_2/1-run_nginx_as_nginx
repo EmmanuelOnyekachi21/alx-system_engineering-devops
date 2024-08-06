@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Configuring Nginx
+
+# Ensure that the nginx user exists
+if ! id -u nginx > /dev/null 2>&1; then
+	echo "User nginx doesn't exist.  Creating it..."
+	useradd -r nginx
+fi
+
+# Ensure that nginx is running
+sed -i 's/^user .*/user nginx;/' /etc/nginx/nginx.conf
+
+# Configure Nginx tolisten on port 8080
+sed -i 's/^.*listen\s\+80;/	listen 8080;/' /etc/nginx/sites-available/default
+
+# Restart Nginx
+service nginx restart
