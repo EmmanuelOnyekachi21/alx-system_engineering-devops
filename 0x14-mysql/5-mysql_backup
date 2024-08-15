@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Compress the backup file
-tar -czf "${archive_file}" "${file}"
+tar -czvf "${archive_file}" "${file}"
 
 # Check if tar compression was successful
 if [ $? -ne 0 ]; then
@@ -35,7 +35,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Clean up the backup file
-rm "${file}"
+#rm "${file}"
 
 # Confirm successful backup and compression
 echo "Backup and compression completed successfully. File saved as ${archive_file}."
