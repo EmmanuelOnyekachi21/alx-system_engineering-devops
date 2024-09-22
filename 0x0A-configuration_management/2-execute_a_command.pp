@@ -1,5 +1,4 @@
-# Puppet manifest to kill a process named killmenow using pkill
-exec { 'killmenow':
-  command => 'pkill -f killmenow',
-path      => '/usr/bin:/bin',
+package { 'Flask':
+  ensure   => '2.1.0',
+  provider => 'pip3',
 }
