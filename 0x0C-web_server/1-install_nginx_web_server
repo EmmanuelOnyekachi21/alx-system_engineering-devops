@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
-# This script installs Nginx and sets up a custom page with "Hello World!" text.
+# Script to configure Nginx to serve "Hello World!"
 
-# Update the package index to ensure the latest packages are installed
+# 1. Update the package list and install nginx
 sudo apt-get update -y
-
-# Install Nginx
 sudo apt-get install nginx -y
 
-ufw allow 'Nginx HTTP' 
-# Ensure Nginx is listening on port 80
+# 2. Make sure Nginx is listening on port 80
 sudo sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
+sudo sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:80;/' /etc/nginx/sites-available/default
 
-# Create or modify the index.html file with the "Hello World!" message
-echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+# 3. Set up the web page with "Hello World!"
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Restart Nginx using service (as systemctl is not allowed)
+# 4. Restart Nginx using the 'service' command
 sudo service nginx restart
