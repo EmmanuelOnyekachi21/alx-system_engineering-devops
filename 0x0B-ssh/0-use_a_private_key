@@ -2,4 +2,4 @@
 # Define the server IP address or hostname
 
 # Use ssh with the private key ~/.ssh/school and connect as user ubuntu
-ssh -i ~/.ssh/school ubuntu@100.25.130.45
+ssh -i ~/.ssh/school ubuntu@35.168.3.245
