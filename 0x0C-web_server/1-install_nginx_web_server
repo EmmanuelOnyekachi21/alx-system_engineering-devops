@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
-# A script that installs nginx and start the service.
+# This script installs Nginx and sets up a custom page with "Hello World!" text
 
 # Update package index
-apt-get update
+sudo apt-get update -y
 
-# Install nginx
-apt-get -y install nginx
+# Install Nginx using apt-get
+sudo apt-get install nginx -y
 
-ufw allow 'Nginx HTTP'
+# Create or modify the index.html file in Nginx's default directory
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 
-# Configure nginx to listen on Port 80 and serve "Hello World!" at the root
-bash -c 'echo "Hello World!" > /var/www/html/index.html'
-
-# Restart nginx
-service nginx restart
+# Start the Nginx service without using systemctl (using service command)
+sudo service nginx start
