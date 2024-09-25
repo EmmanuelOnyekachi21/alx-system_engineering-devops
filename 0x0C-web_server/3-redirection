@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
-# Install Nginx if not already installed
-sudo apt-get update
-sudo apt-get install -y nginx
+# A script that installs nginx, configures a 301 redirect, and restarts the service.
 
-# Define the redirection configuration
-REDIRECT_CONFIG="
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-"
+# Update the package index
+apt-get update
 
-# Add the redirection configuration to Nginx configuration file
-sudo sed -i "/server_name _;/a $REDIRECT_CONFIG" /etc/nginx/sites-available/default
+# Install nginx
+apt-get -y install nginx
 
-# Check Nginx configuration syntax
-sudo nginx -t
+# Allow Nginx through the firewall
+ufw allow 'Nginx HTTP'
 
-# Reload Nginx to apply the changes
-sudo systemctl reload nginx
+# Add a 301 redirection to Nginx configuration for /redirect_me
+sed -i '/^\tlocation \/ {/a \\n\tlocation /redirect_me {\n\t\trewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}' /etc/nginx/sites-available/default
+
+# Restart nginx to apply the changes
+service nginx restart
